@@ -24,6 +24,7 @@ export class HeroesComponent implements OnInit{
   heroes: Hero[];
 
   getHeroes(): void {
+    console.error('getHeroes called'); 
     this.heroService.getHeroes().then(h => this.heroes = h);
   }
 
@@ -37,5 +38,29 @@ export class HeroesComponent implements OnInit{
 
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedHero.id]);
+  }
+
+  add(name: string) : void {
+    name = name.trim();
+    if(!name) {return;}
+
+    let hero = new Hero();
+    hero.name = name;
+
+    this.heroService.createHero(hero)
+    .then(h=> {
+      this.heroes.push(h);
+      this.selectedHero = h;
+
+    });
+  }
+
+  delete(hero: Hero): void {
+    this.heroService.deleteHero(hero.id)
+    .then(() => {
+      this.heroes = this.heroes.filter(h => h.id !== hero.id);
+        if (this.selectedHero === hero) { this.selectedHero = null; }
+
+    })
   }
 }

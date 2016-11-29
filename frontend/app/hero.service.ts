@@ -10,7 +10,8 @@ import { HEROES } from './mock-heros';
 @Injectable()
 export class HeroService{
 
-    private heroesUrl = 'app/heroes';
+    private heroesUrl = 'http://localhost:25207/api/heroes';
+    private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) {}
 
@@ -21,7 +22,7 @@ export class HeroService{
     private getDynamicHeroes() : Promise<Hero[]> {
         return this.http.get(this.heroesUrl)
             .toPromise()
-            .then(response => response.json().data as Hero[])
+            .then(response => response.json() as Hero[])
             .catch(this.handleError);
     }
 
@@ -41,7 +42,36 @@ export class HeroService{
     }
 
     getHero(id: number): Promise<Hero> {
-        return this.getHeroes()
-                    .then(hs => hs.find(h => h.id === id));
+       const url = `${this.heroesUrl}/${id}`;
+
+        return this.http.get(url).toPromise()
+            .then(response => response.json() as Hero)
+            .catch(this.handleError);
+    }
+
+    updateHero(hero: Hero): Promise<Hero> {
+       const url = `${this.heroesUrl}/${hero.id}`;
+
+       return this.http
+            .put(url, JSON.stringify(hero), {headers: this.headers})
+            .toPromise()
+            .then(() => hero)
+            .catch(this.handleError);
+    }
+
+    createHero(hero: Hero): Promise<Hero>{
+        return this.http.post(this.heroesUrl, JSON.stringify(hero), {headers: this.headers})
+        .toPromise()
+        .then(res => res.json() as Hero)
+        .catch(this.handleError);
+    }
+
+    deleteHero(id: number) : Promise<void>{
+        const url = `${this.heroesUrl}/${id}`;
+
+        return this.http.delete(url, {headers: this.headers})
+        .toPromise()
+        .then(() => null)
+        .catch(this.handleError);
     }
 }

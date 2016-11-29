@@ -22,7 +22,7 @@ import {HeroService} from './hero.service';
       BrowserModule,
       FormsModule,
       HttpModule,
-      InMemoryWebApiModule.forRoot(InMemoryDataService),
+      //InMemoryWebApiModule.forRoot(InMemoryDataService),
       AppRoutingModule
     ],
   declarations: [
