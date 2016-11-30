@@ -4,6 +4,7 @@ import {Component} from '@angular/core'
     moduleId: module.id,
     selector: 'my-app',
     template: `
+    <my-login>Login...</my-login>
     <h1>MY - {{title}}</h1>
     <h3>{{title}}</h3>
     <nav>

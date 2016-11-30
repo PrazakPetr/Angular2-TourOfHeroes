@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Hero } from './hero';
 import { HEROES } from './mock-heros';
+import { AuthService } from './auth.service';
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class HeroService{
     private heroesUrl = 'http://localhost:25207/api/heroes';
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    constructor(private http: Http) {}
+    constructor(private http: Http, private authService: AuthService) {}
 
     private getStaticHeroes(): Promise<Hero[]> {
         return Promise.resolve(HEROES);
@@ -53,7 +54,10 @@ export class HeroService{
        const url = `${this.heroesUrl}/${hero.id}`;
 
        return this.http
-            .put(url, JSON.stringify(hero), {headers: this.headers})
+            .put(url, 
+                JSON.stringify(hero),
+                 {headers: this.authService.appendAuthHeaders(this.headers)}
+                 )
             .toPromise()
             .then(() => hero)
             .catch(this.handleError);

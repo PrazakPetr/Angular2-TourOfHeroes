@@ -1,7 +1,7 @@
-/.vscode
-/node_modules/**
-/app/**/*.js
-/app/**/*.js.map
+/frontend/.vscode
+/frontend/node_modules/**
+/frontend/app/**/*.js
+/frontend/app/**/*.js.map
 
 
 

@@ -14,7 +14,10 @@ import { AppComponent }   from './app.component';
 import { DashboardComponent }   from './dashboard.component';
 import { HeroesComponent } from './heroes.component';
 import { HeroDetailComponent } from './hero-detail.component';
+import { LoginComponent } from './login.component';
+
 import {HeroService} from './hero.service';
+import {AuthService} from './auth.service';
 
 
 @NgModule({
@@ -29,11 +32,13 @@ import {HeroService} from './hero.service';
         AppComponent,
         DashboardComponent,
         HeroesComponent,
-        HeroDetailComponent 
+        HeroDetailComponent,
+        LoginComponent 
     ], 
 
   providers: [
-    HeroService
+    HeroService,
+    AuthService
     ],
 
   bootstrap: [

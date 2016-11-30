@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TohBackend.Services;
 using TohBackend.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TohBackend.Controllers
 {
@@ -40,6 +41,8 @@ namespace TohBackend.Controllers
             return base.Json(hero);
         }
 
+        //[Authorize("Bearer")]
+        [Authorize()]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Hero hero)
         {
@@ -52,6 +55,7 @@ namespace TohBackend.Controllers
 
             return base.Json(hero);
         }
+
 
         [HttpPost()]
         public IActionResult Post([FromBody] Hero hero)
